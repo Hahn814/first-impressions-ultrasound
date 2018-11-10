@@ -1,0 +1,77 @@
+{% extends 'general/base.html' %}
+
+{% block title %}First Impressions | Packages {% endblock title %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+    <div class="center wide content_container mdl-card">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Package Summary </h2>
+        </div>
+        <table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+            <thead>
+                <tr>
+                <th class="mdl-data-table__cell--non-numeric">Name </th>
+                <th>Price </th>
+                <th></th>
+                </tr>
+            </thead>
+            {% for package in packages %}
+                <tbody>
+                    <tr>
+                    <td class="mdl-data-table__cell--non-numeric">{{package.name}}</td>
+                    <td>{{package.price}}</td>
+                    <td><a href="#{{package.name}}">See Description</a>"</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+    <br>
+    <div class="center wide content_container mdl-card">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Packages </h2>
+            {% if user.is_authenticated %}
+            <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" href="{% url 'package_new' %}">
+                <i class="material-icons">add</i>
+            </a>
+            {% endif %}
+        </div>
+        
+        {% for package in packages %}
+            <div class="center wide mdl-card" id="{{package.name}}">
+                <div class="mdl-card__title">
+                    <h2 class="mdl-card__title-text">{{package.name}}</h2>
+                </div>
+
+                <div class="mdl-card__supporting-text">
+                    {{package.description | safe}}
+                </div>
+
+                <div class="mdl-card__menu">
+                    {% if user.is_authenticated %}
+                    <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" href="{% url 'package_edit' pk=package.pk %}">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" href="{% url 'package_remove' pk=package.pk %}" onclick="return confirm('Are you sure you want to delete this Package?');">
+                        <i class="material-icons">clear</i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block script %}
+<script>
+
+</script>
+{% endblock script %}

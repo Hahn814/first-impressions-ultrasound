@@ -1,0 +1,24 @@
+
+{% extends 'general/base.html' %}
+
+{% block title %}First Impressions | {{image_name}} {% endblock title %}
+
+{% block content %}
+<div class="center wide content_container mdl-card">
+    <div class="mdl-card__title" style="background: url({{image_path}}) center / cover;">
+        <h1 class="mdl-card__title-text">{{image_name}}</h1>
+    </div>
+    <div class="mdl-card__supporting-text">
+        {{  post.description | safe}}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block script %}
+<script>
+
+</script>
+{% endblock script %}

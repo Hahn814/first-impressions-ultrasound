@@ -1,0 +1,25 @@
+{% extends 'general/base.html' %}
+
+{% block title %}First Impressions | Edit Homepage {% endblock title %}
+
+{% block content %}
+{{ form.media }}
+<div class="center wide content_container mdl-card">
+    <div class="mdl-card__title">
+        <h1 class="mdl-card__title-text">Homepage body </h1>
+    </div>
+    <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+</div>
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block script %}
+<script>
+
+</script>
+{% endblock script %}
