@@ -1,7 +1,7 @@
 # first-impressions-ultrasound
 First Impressions Ultrasound
 
-# Install Process (pythonanywhere deployment):
+# Install (pythonanywhere deployment):
 `pip3 install --user pythonanywhere`
 
 `pa_autoconfigure_django.py https://github.com/Hahn814/first-impressions-ultrasound.github`
