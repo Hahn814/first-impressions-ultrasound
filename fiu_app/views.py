@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Advertisement, HomePageDescription, Package, Photo
+from .models import Advertisement, HomePageDescription, Package, Photo, Gallery
 from .forms import HomePageDescriptionForm, AdvertisementForm, PackageForm
 from django.shortcuts import get_object_or_404
 
@@ -33,7 +33,10 @@ def home_body_edit(request, pk):
 
 def galleries(request):
     """The view that lists the various image galleries."""
-    return render(request, 'general/galleries.html')
+    image_galleries = [gallery for gallery in Gallery.objects.all() if gallery.is_published()]
+    messages.debug(request, "Pulled {} galleries".format(len(image_galleries)))
+    print("Pulled {} galleries".format(len(image_galleries)))
+    return render(request, 'general/galleries.html', {'image_galleries': image_galleries})
 
 
 def gift_certificates(request):

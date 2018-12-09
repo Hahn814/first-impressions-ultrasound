@@ -6,7 +6,7 @@
        <meta charset="utf-8">
        <meta http-equiv="X-UA-Compatible" content="IE=edge">
        <meta name="viewport" content="width=device-width, initial-scale=1">
-       <meta name="description" content="First Impressions Unltrasound.">
+       <meta name="description" content="First Impressions Ultrasound.">
        <meta name="author" content="Paul Hahn">
        <title>{% block title %}{% endblock title %}</title>
 
@@ -19,18 +19,20 @@
 
        <script>
        </script>
+       {% block imports %}{% endblock imports %}
    </head>
    <body>
-       <header>
-           
-       </header>
+
+       {% block header %}{% endblock header%}
        <div class="mdl-layout mdl-layout--fixed-header ">
                 <header class="mdl-layout__header mdl-layout__header--transparent">
                     <a href="{% url 'home'%}"><div class="mdl-layout__header-row hero_image" id="hero_image"></div></a>
                    <div class="mdl-layout__header-row navbar">
-                       <div class="mdl-layout-title"></div>
+                       <div class="mdl-layout-title">
+                           <a class="mdl-navigation__link" href="{% url 'home' %}">Home </a>
+                       </div>
                        <div class="mdl-layout-spacer"></div>
-                       <!-- Navigation. We hide it in small screens. -->
+
                        <nav class="mdl-navigation mdl-layout--large-screen-only">
                            <a class="mdl-navigation__link" href="{% url 'galleries' %}">Image Galleries </a>
                            <a class="mdl-navigation__link" href="{% url 'gift_certificates' %}">Gift Certificates </a>
@@ -38,12 +40,14 @@
                            <a class="mdl-navigation__link" href="{% url 'facilities' %}">Facilities </a>
                            <a class="mdl-navigation__link" href="{% url 'faq' %}">FAQ </a>
                            <a class="mdl-navigation__link" href="{% url 'contact_us' %}">Contact Us </a>
+
                            {% if user.is_authenticated %}
                                 <a class="mdl-navigation__link" href="{% url 'logout' %}">Logout </a>
                            {% else %}
                                 <a class="mdl-navigation__link" href="{% url 'login' %}">Login </a>
                            {% endif %}
                        </nav>
+
                    </div>
                 </header>
                 <div class="mdl-layout__drawer">
@@ -60,6 +64,15 @@
                 </div>
                 <main class="mdl-layout__content">
                    <div class="page-header">
+                       {% if messages %}
+                           <ul class="messages">
+                               {% for message in messages %}
+                                   <li {% if message.tags %} class="{{ message.tags }}" {% endif %} >
+                                       {{ message }}
+                                   </li>
+                               {% endfor %}
+                           </ul>
+                       {% endif %}
                         <!--     A area to hold any important information worth advertising      -->
                        {% block jumbotron %}
                        {% endblock jumbotron %}

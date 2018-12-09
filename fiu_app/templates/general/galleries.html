@@ -1,11 +1,51 @@
 {% extends 'general/base.html' %}
+{% load static %}
+{% load tags %}
 
 {% block title %}First Impressions | Image Galleries {% endblock title %}
 
-{% block header %}
-{% endblock header %}
+{% block imports %}
+    <link rel="stylesheet" href='{% static "css/gallery.css" %}'>
+{% endblock imports%}
+
+{% block header %}{% endblock header %}
 
 {% block content %}
+    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        <div class="mdl-tabs__tab-bar">
+            {% for gallery in image_galleries %}
+                {% if forloop.counter0 == 0 %}
+                    <a href="#gallery_{{gallery.id}}" class="mdl-tabs__tab is-active" id="gallery_{{gallery.id}}">{{gallery.title}}</a>
+                {% else %}
+                    <a href="#gallery_{{gallery.id}}" class="mdl-tabs__tab" id="gallery_{{gallery.id}}">{{gallery.title}}</a>
+                {% endif %}
+
+                <div class="mdl-tooltip" for="gallery_{{gallery.id}}">
+                    {{gallery.description|safe}}
+                </div>
+            {% endfor %}
+      </div>
+
+    {% for gallery in image_galleries %}
+        <div class="center wide content_container mdl-card">
+        {% if forloop.counter0 == 0 %}
+            <div class="mdl-tabs__panel is-active" id="gallery_{{gallery.id}}">
+        {% else %}
+            <div class="mdl-tabs__panel" id="gallery_{{gallery.id}}">
+        {% endif %}
+                {% for group in gallery.get_photos|group_list_by:3 %}
+                <div class="center image-gallery-grid mdl-grid">
+                    {% for photo_object in group %}
+                        {% if photo_object %}
+                            <img class="photo" src="{{ photo_object.image.url }}">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+
 {% endblock %}
 
 {% block footer %}

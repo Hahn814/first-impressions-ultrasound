@@ -121,12 +121,16 @@ class Gallery(models.Model):
     """A collection of Photos."""
 
     title = models.CharField(max_length=100)
+    publish = models.BooleanField(default=True)
     description = HTMLField()
 
     def get_photos(self):
         """Return Photo model objects related to this gallery."""
         photos = Photo.objects.filter(gallery=self.id)
         return photos
+
+    def is_published(self):
+        return self.publish
 
     def __str__(self):
         """Return the string repr."""
